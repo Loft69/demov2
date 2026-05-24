@@ -1,14 +1,14 @@
-<?php require_once '../config/db.php'; ?>
+<?php require_once 'db.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="style.css">
-    <title><?= SITE_NAME ?></title>
+    <title>Корочки.есть</title>
 </head>
 <body>
-    <header><h1><?= SITE_NAME ?></h1></header>
+    <header><h1>Корочки.есть</h1></header>
     <div class="container" style="text-align: center;">
-        <h2><?= SITE_TAGLINE ?></h2>
+        <h2>Получи профессиональное образование онлайн!</h2>
         <div class="nav">
             <a href="login.php"><button>Войти</button></a>
             <br><br>

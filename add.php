@@ -1,5 +1,5 @@
 <?php
-require_once '../config/db.php';
+require_once 'db.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -8,53 +8,33 @@ if (!isset($_SESSION['user_id'])) {
 
 if (isset($_POST['go'])) {
     $uid = $_SESSION['user_id'];
+    $cn = $_POST['course'];
+    $sd = $_POST['date'];
+    $pm = $_POST['pay'];
     
-    $fields = ['user_id'];
-    $values = [$uid];
-    
-    foreach (FORM_FIELDS as $field) {
-        $name = $field[0];
-        if (isset($_POST[$name]) && $_POST[$name] !== '') {
-            $fields[] = $name;
-            $values[] = "'" . mysqli_real_escape_string($db, $_POST[$name]) . "'";
-        }
-    }
-    
-    $sql = "INSERT INTO " . ENTITY_TABLE . " (" . implode(', ', $fields) . ") 
-            VALUES (" . implode(', ', $values) . ")";
-    
-    mysqli_query($db, $sql);
+    mysqli_query($db, "INSERT INTO applications (user_id, course_name, start_date, payment_method) 
+                       VALUES ($uid, '$cn', '$sd', '$pm')");
     header('Location: profile.php');
-    exit;
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="style.css">
-    <title>Новая <?= ENTITY_NAME ?></title>
+    <title>Новая заявка</title>
 </head>
 <body>
     <div class="container">
-        <h2>Новая <?= ENTITY_NAME ?></h2>
+        <h2>Новая заявка</h2>
         <form method="POST">
-            <?php foreach (FORM_FIELDS as $field): 
-                $name = $field[0];
-                $type = $field[1];
-                $label = $field[2];
-                $options = $field[3];
-            ?>
-                <?php if ($type === 'select'): ?>
-                    <select name="<?= $name ?>" required>
-                        <option value="">-- Выберите --</option>
-                        <?php foreach ($options as $opt): ?>
-                            <option value="<?= htmlspecialchars($opt) ?>"><?= htmlspecialchars($opt) ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                <?php else: ?>
-                    <input type="<?= $type ?>" name="<?= $name ?>" placeholder="<?= $label ?>" required>
-                <?php endif; ?>
-            <?php endforeach; ?>
+            <input name="course" placeholder="Название курса" required>
+            <input name="date" type="date" required>
+            <select name="pay" required>
+                <option value="">-- Способ оплаты --</option>
+                <option>Наличными</option>
+                <option>Картой</option>
+                <option>Переводом</option>
+            </select>
             <button name="go">Отправить</button>
         </form>
         <a href="profile.php">← Назад</a>
