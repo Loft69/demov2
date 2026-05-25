@@ -9,8 +9,7 @@ if (isset($_POST['send'])) {
     $sd  = $_POST['date'];
     $pm  = $_POST['pay'];
 
-    mysqli_query($db, "INSERT INTO applications (user_id, transport, start_date, payment)
-                       VALUES ($uid, '$tr', '$sd', '$pm')");
+    mysqli_query($db, "INSERT INTO applications (user_id, transport, start_date, payment) VALUES ($uid, '$tr', '$sd', '$pm')");
     header('Location: profile.php');
     exit;
 }

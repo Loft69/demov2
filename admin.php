@@ -11,8 +11,7 @@ if (isset($_POST['update-status'])) {
     mysqli_query($db, "UPDATE applications SET status='$st' WHERE id=$aid");
 }
 
-$res = mysqli_query($db, "SELECT a.*, u.full_name, u.phone FROM applications a
-                           JOIN users u ON a.user_id = u.id ORDER BY a.id DESC");
+$res = mysqli_query($db, "SELECT a.*, u.full_name, u.phone FROM applications a JOIN users u ON a.user_id = u.id ORDER BY a.id DESC");
 ?>
 <!DOCTYPE html>
 <html>

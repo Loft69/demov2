@@ -9,8 +9,7 @@ if (isset($_POST['register'])) {
     $t = $_POST['tel'];
     $e = $_POST['email'];
 
-    mysqli_query($db, "INSERT INTO users (login, password, full_name, birthdate, phone, email)
-                       VALUES ('$l', '$p', '$f', '$b', '$t', '$e')");
+    mysqli_query($db, "INSERT INTO users (login, password, full_name, birthdate, phone, email) VALUES ('$l', '$p', '$f', '$b', '$t', '$e')");
     header('Location: login.php');
 }
 ?>
