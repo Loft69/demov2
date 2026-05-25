@@ -1,42 +1,47 @@
 <?php
 require_once 'db.php';
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
-}
+if (!isset($_SESSION['user_id'])) { header('Location: login.php'); exit; }
 
-if (isset($_POST['go'])) {
+if (isset($_POST['send'])) {
     $uid = $_SESSION['user_id'];
-    $cn = $_POST['course'];
-    $sd = $_POST['date'];
-    $pm = $_POST['pay'];
-    
-    mysqli_query($db, "INSERT INTO applications (user_id, course_name, start_date, payment_method) 
-                       VALUES ($uid, '$cn', '$sd', '$pm')");
+    $tr  = $_POST['transport'];
+    $sd  = $_POST['date'];
+    $pm  = $_POST['pay'];
+
+    mysqli_query($db, "INSERT INTO applications (user_id, transport, start_date, payment)
+                       VALUES ($uid, '$tr', '$sd', '$pm')");
     header('Location: profile.php');
+    exit;
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./assets/style.css">
     <title>Новая заявка</title>
 </head>
 <body>
+    <header><h1>Водить<span>.РФ</span></h1></header>
     <div class="container">
         <h2>Новая заявка</h2>
         <form method="POST">
-            <input name="course" placeholder="Название курса" required>
+            <select name="transport" required>
+                <option value="">-- Вид транспорта --</option>
+                <option>Катер</option>
+                <option>Яхта</option>
+                <option>Круизный лайнер</option>
+            </select>
             <input name="date" type="date" required>
             <select name="pay" required>
                 <option value="">-- Способ оплаты --</option>
-                <option>Наличными</option>
-                <option>Картой</option>
-                <option>Переводом</option>
+                <option>Наличные</option>
+                <option>Карта</option>
+                <option>Рассрочка</option>
             </select>
-            <button name="go">Отправить</button>
+            <button name="send">Отправить</button>
         </form>
+        <br>
         <a href="profile.php">← Назад</a>
     </div>
 </body>
